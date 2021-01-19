@@ -8,95 +8,115 @@ import java.util.List;
  */
 public class BinaryFind {
     public static void main(String[] args) {
-        int[] array = {1,8,10,89,1000,1000,1000,1000,1234};
+        int[] array = {1, 8, 10, 89, 1000, 1000, 1000, 1000, 1234};
 
         int i = find(array, 88);
         System.out.println(i);
 
         List<Integer> list = findList(array, 1000);
         System.out.println(list);
+
+        System.out.println(search(array, 8));
     }
 
-    public static  int find(int[] array,int findVal){
-        return find(array,0,array.length-1,findVal);
+    public static int find(int[] array, int findVal) {
+        return find(array, 0, array.length - 1, findVal);
     }
 
 
-    private static  int find(int[] array,int left,int right,int findVal){
+    private static int find(int[] array, int left, int right, int findVal) {
 
 
         // 当left>right
-        if(left>right){
+        if (left > right) {
             return -1;
         }
 
-        int mid = (left+right)/2;
+        int mid = (left + right) / 2;
         int midVal = array[mid];
 
-        if(findVal>midVal){
+        if (findVal > midVal) {
             // 向右
-            return find(array,mid+1,right,findVal);
-        }else if(findVal<midVal){
-            return find(array,left,mid-1,findVal);
-        }else {
+            return find(array, mid + 1, right, findVal);
+        } else if (findVal < midVal) {
+            return find(array, left, mid - 1, findVal);
+        } else {
             return mid;
         }
     }
 
 
-
-
-    public static  List<Integer> findList(int[] array, int findVal){
-        return findList(array,0,array.length-1,findVal);
+    public static List<Integer> findList(int[] array, int findVal) {
+        return findList(array, 0, array.length - 1, findVal);
     }
 
-    private static  List<Integer> findList(int[] array,int left,int right,int findVal){
+    private static List<Integer> findList(int[] array, int left, int right, int findVal) {
 
 
         // 当left>right
-        if(left>right){
+        if (left > right) {
             return new ArrayList<Integer>();
         }
 
-        int mid = (left+right)/2;
+        int mid = (left + right) / 2;
         int midVal = array[mid];
 
-        if(findVal>midVal){
+        if (findVal > midVal) {
             // 向右
-            return findList(array,mid+1,right,findVal);
-        }else if(findVal<midVal){
-            return findList(array,left,mid-1,findVal);
-        }else {
+            return findList(array, mid + 1, right, findVal);
+        } else if (findVal < midVal) {
+            return findList(array, left, mid - 1, findVal);
+        } else {
 
             List<Integer> list = new ArrayList<>();
 
             // 左
-            int temp = mid -1 ;
+            int temp = mid - 1;
 
-            while (true){
-                if(temp<0||array[temp]!=findVal){
+            while (true) {
+                if (temp < 0 || array[temp] != findVal) {
                     break;
-                }else {
+                } else {
 
                     list.add(temp);
-                    temp-=1;
+                    temp -= 1;
                 }
             }
 
             list.add(mid);
             // 右
 
-            temp = mid +1;
-            while (true){
-                if(temp>array.length-1||array[temp]!=findVal){
+            temp = mid + 1;
+            while (true) {
+                if (temp > array.length - 1 || array[temp] != findVal) {
                     break;
-                }else {
+                } else {
                     list.add(temp);
-                    temp+=1;
+                    temp += 1;
                 }
             }
 
             return list;
         }
+    }
+
+    // 非递归
+
+    public static int search(int[] array, int findVal) {
+        int left = 0;
+        int right = array.length - 1;
+        int mid;
+        while (left <= right) {
+            mid = (left + right) / 2;
+            if (findVal == array[mid]) {
+                return mid;
+            } else if (findVal > array[mid]) {
+                left = mid + 1;
+            } else {
+                right = mid - 1;
+            }
+        }
+
+        return -1;
     }
 }
