@@ -24,6 +24,7 @@ public class InsertValueFind {
 
     private static int insertValueFind(int[] array, int left, int right, int findVal) {
 
+        // 后面两个条件是为了防止mid越界
         if (left > right || findVal < array[0] || findVal > array[array.length - 1]) {
             return -1;
         }
